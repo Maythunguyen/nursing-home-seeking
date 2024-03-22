@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from parser import parse_file
 from models import NursingHome
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -16,6 +17,8 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+# Serve static files from the React app's build directory
+app.mount("/", StaticFiles(directory="../frontend/build", html=True), name="static")
 
 
 # Path to your PDF file
